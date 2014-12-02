@@ -48,7 +48,7 @@ Then I had to search how this engine works. Soon I found the redirection is impl
 &lt;/bean&gt;
 </code></pre>
 
-<p>Here, authc means FormAuthenticationFilter class in Shiro. Thus the log out operation is implemented in onAccessDenied method, then I wonder why it does not work for my situation. I searched Google again, and realized that is is due to AJAX request! Because all the requests in our project is AJAX request, the redirection thus can not be implemented by the server side. An alternative solution is add a sign in http response header, then the front page can receive the sign, and perform the redirection. Since the solution is clear, I created a new class named xxFilter, inherited from FormAuthenticationFilter, overrode onAccessDenied method, and added an operation for AJAX request. The code fragment is as follows.</p>
+<p>Here, authc means <em>FormAuthenticationFilter</em> class in Shiro. Thus the log out operation is implemented in onAccessDenied method, then I wonder why it does not work for my situation. I searched Google again, and realized that is is due to AJAX request! Because all the requests in our project is AJAX request, the redirection thus can not be implemented by the server side. An alternative solution is add a sign in http response header, then the front page can receive the sign, and perform the redirection. Since the solution is clear, I created a new class named xxFilter, inherited from FormAuthenticationFilter, overrode onAccessDenied method, and added an operation for AJAX request. The code fragment is as follows.</p>
 
 <pre><code> if (WebUtils.isAjax((HttpServletRequest) request)) {
     logger.debug("This is ajax request, no redirection, but add header.");
